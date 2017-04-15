@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: yes
+  name: Let's update packages
+  tasks:
+  - name: Update package list and perform safe-upgrade
+    apt: upgrade=safe update_cache=yes
+
+  - name: Check if packages need to be autoremoved
+    command: apt-get --dry-run autoremove
+    register: check_autoremove
+    changed_when: False
+
+  - name: Autoremove unused packages
+    command: apt-get -y autoremove
+    when: "'packages will be REMOVED' in check_autoremove.stdout"
+
+  - name: Check if packages need to be autocleaned
+    command: apt-get --dry-run autoclean
+    register: check_autoclean
+    changed_when: False
+
+  - name: Clean up package cache
+    command: apt-get -y autoclean
+    when: "'Del' in check_autoclean.stdout"

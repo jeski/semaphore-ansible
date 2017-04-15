@@ -1,0 +1,10 @@
+---
+### Playbook for all hosts
+
+- name: One Time Server build
+  hosts: all
+  gather_facts: yes
+  become: yes
+
+  roles: 
+    - ntp

@@ -1,0 +1,9 @@
+---
+# handlers file for ntp
+
+- name: Start NTP Service
+  action: > 
+    service name={{ ntp_service}} state=started enabled=yes
+
+- name: Sync NTP
+  command: ntpdate -u {{ ntpdate_server }}

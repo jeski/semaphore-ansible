@@ -1,0 +1,5 @@
+---
+# custom vars for ntp
+
+ntp_timezone: America/Los_Angeles
+ntpdate_server: pool.ntp.org
